@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Tom's Arcade Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-ads: #f59e0b;
+            --accent-ads-hover: #d97706;
+            --accent-noads: #10b981;
+            --accent-noads-hover: #059669;
+            --modal-bg: #1e293b;
+            --button-bg: #334155;
+            --button-hover: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(245, 158, 11, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 50%, rgba(16, 185, 129, 0.15), transparent 25%);
+        }
+
+        header {
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .logo span {
+            color: #8b5cf6;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (min-width: 768px) {
+            .portal-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        .portal-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .portal-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-ads:hover {
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .card-noads:hover {
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .card-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-stat {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: var(--button-bg);
+            color: var(--text-color);
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: background 0.2s, transform 0.1s;
+            text-align: center;
+            color: #fff;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-ads {
+            background-color: var(--accent-ads);
+        }
+
+        .btn-ads:hover {
+            background-color: var(--accent-ads-hover);
+        }
+
+        .btn-noads {
+            background-color: var(--accent-noads);
+        }
+
+        .btn-noads:hover {
+            background-color: var(--accent-noads-hover);
+        }
+
+        .info-section {
+            background-color: rgba(30, 41, 59, 0.6);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .info-section h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #8b5cf6;
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            background-color: rgba(15, 23, 42, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #8b5cf6;
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        #info-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .info-content {
+            background-color: var(--modal-bg);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .info-content h2 {
+            color: #8b5cf6;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .info-content p {
+            margin-bottom: 16px;
+            line-height: 1.6;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .info-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--button-bg);
+            border: none;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .info-close-btn:hover {
+            background: var(--button-hover);
+        }
+
+        .tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tag-ads {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .tag-noads {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Tom's <span>Arcade</span> Portal</div>
+        <p class="subtitle">Choose your gaming experience. Do you want the massive library, or the uninterrupted ad-free zone?</p>
+    </header>
+
+    <div class="container">
+        <div class="portal-grid">
+            <div class="portal-card card-ads">
+                <div class="tag tag-ads">Ad Supported</div>
+                <div class="card-icon">🎮</div>
+                <h2 class="card-title">Tom's Arcade Main</h2>
+                <div class="card-stat">5000+ Games</div>
+                <p class="card-desc">The ultimate massive library. Play thousands of premium games across all genres. This site is completely free and supported by brief advertisements.</p>
+                <a href="https://math12393-toms-arcade.static.hf.space/" target="_blank" class="btn btn-ads">Enter Main Arcade</a>
+            </div>
+
+            <div class="portal-card card-noads">
+                <div class="tag tag-noads">100% Ad-Free</div>
+                <div class="card-icon">🛡️</div>
+                <h2 class="card-title">Tom's Arcade No Ads</h2>
+                <div class="card-stat">100+ Curated Games  (More Games Comming soon..)</div>
+                <p class="card-desc">Pure, uninterrupted gaming. A carefully curated selection of the best indie web games with absolutely zero advertisements, trackers, or pop-ups.</p>
+                <a href="https://math12393-toms-arcade-no-ads.static.hf.space/" target="_blank" class="btn btn-noads">Enter Ad-Free Zone</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>How It Works</h3>
+            <p>We host two distinct portals to fit your needs. The <strong>Main Arcade</strong> features an enormous catalog of 5000+ games powered by ad-revenue to keep the servers running. If you prefer zero interruptions, the <strong>No Ads</strong> portal offers a smaller, hand-picked selection of high-quality games that run entirely inside your browser with no monetization. Both sites support mobile, tablet, and desktop devices.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <span class="footer-link" onclick="openInfo('terms')">Terms of Service</span>
+            <span class="footer-link" onclick="openInfo('policy')">Privacy Policy</span>
+            <span class="footer-link" onclick="openInfo('contact')">Contact Us</span>
+        </div>
+        <div class="copyright">
+            © 2026 Tom's Arcade. All games belong to their respective creators.
+        </div>
+    </footer>
+
+    <div id="info-modal" onclick="closeInfo(event)">
+        <div class="info-content" onclick="event.stopPropagation()">
+            <button class="info-close-btn" onclick="closeInfo()">✖</button>
+            <div id="info-text"></div>
+        </div>
+    </div>
+
+    <script>
+        const infoModal = document.getElementById('info-modal');
+        const infoText = document.getElementById('info-text');
+
+        const infoContent = {
+            terms: `
+                <h2>Terms of Service</h2>
+                <p>Welcome to the Tom's Arcade Portal. By using this website and entering our arcades, you agree to these terms.</p>
+                <p>All games provided on our sites are embedded directly from their original creators. We do not claim ownership of any games displayed here.</p>
+                <p>The Main Arcade is supported by advertisements. We ask that you do not use ad-blockers on the Main Arcade, as this revenue keeps the site running for everyone.</p>
+                <p>These services are provided "as is" without any warranties. We are not responsible for any issues, damages, or lost data that may occur while playing games on this platform.</p>
+            `,
+            policy: `
+                <h2>Privacy Policy</h2>
+                <p>Your privacy is important to us. This portal is designed to be privacy-friendly.</p>
+                <p><strong>Data Collection:</strong> We do not collect, store, or track any personal data on this portal page.</p>
+                <p><strong>Third-Party Games & Ads:</strong> The Main Arcade uses third-party ad networks which may use cookies to serve relevant ads. The No Ads Arcade does not use ad networks, but individual games may use their own local storage to save your progress. These are governed by the original game developers.</p>
+            `,
+            contact: `
+                <h2>Contact Us</h2>
+                <p>If you have any questions, concerns, or if you are a game developer and want your game removed from our sites, please reach out to us.</p>
+                <p><strong>Email:</strong> <a href="mailto:wen471942@gmail.com" style="color: #8b5cf6;">wen471942@gmail.com</a></p>
+            `
+        };
+
+        function openInfo(type) {
+            infoText.innerHTML = infoContent[type];
+            infoModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInfo(event) {
+            if (event && event.target !== infoModal) return;
+            infoModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
