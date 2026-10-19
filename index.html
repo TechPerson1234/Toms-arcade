@@ -57,6 +57,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
         .logo span {
@@ -69,6 +70,7 @@
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.5;
+            padding: 0 10px;
         }
 
         .container {
@@ -78,21 +80,23 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            /* Removed justify-content: center; to prevent the top card from going off-screen on mobile */
         }
 
         .portal-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
-            margin-top: 30px;
-            margin-bottom: 60px;
+            margin-top: 20px;
+            margin-bottom: 40px;
         }
 
         @media (min-width: 768px) {
             .portal-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 40px;
+                margin-top: 40px;
+                margin-bottom: 60px;
             }
         }
 
@@ -109,6 +113,18 @@
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .portal-card {
+                padding: 30px 20px;
+            }
+            .card-title {
+                font-size: 24px;
+            }
+            .logo {
+                font-size: 28px;
+            }
         }
 
         .portal-card:hover {
@@ -137,13 +153,14 @@
         }
 
         .card-stat {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             margin-bottom: 15px;
             padding: 6px 16px;
             border-radius: 20px;
             background: var(--button-bg);
             color: var(--text-color);
+            text-align: center;
         }
 
         .card-desc {
@@ -215,6 +232,7 @@
             text-align: center;
             border-top: 1px solid var(--border-color);
             background-color: rgba(15, 23, 42, 0.8);
+            margin-top: auto;
         }
 
         .footer-links {
@@ -355,7 +373,7 @@
                 <div class="tag tag-noads">100% Ad-Free</div>
                 <div class="card-icon">🛡️</div>
                 <h2 class="card-title">Tom's Arcade No Ads</h2>
-                <div class="card-stat">100+ Curated Games  (More Games Comming soon..)</div>
+                <div class="card-stat">100+ Curated Games<br>(More Coming Soon...)</div>
                 <p class="card-desc">Pure, uninterrupted gaming. A carefully curated selection of the best indie web games with absolutely zero advertisements, trackers, or pop-ups.</p>
                 <a href="https://math12393-toms-arcade-no-ads.static.hf.space/" target="_blank" class="btn btn-noads">Enter Ad-Free Zone</a>
             </div>
